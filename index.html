@@ -1,0 +1,151 @@
+<!--
+Programmer: Caylie del Rosario
+Last Updated: 02/18/2026
+To-Do:
+[x] Rating functionality 	(WEDNESDAY)
+[ ] Creature functionality 	(THURSDAY)
+[ ] User login and settings (THURSDAY)
+[ ] "AI" recommendations 	(THURSDAY)
+[ ] An actual homescreen 	(FRIDAY)
+[ ] UI and visuals 			(FRIDAY)
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UNTITLED</title>
+
+    <!-- styling -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+
+<!-- this content appears everywhere -->
+<header>
+<div id="banner" height="200px"><img aria-label="Placeholder header image" width=100%></div>
+<nav>
+	<ul>
+		<li onclick="openScreen('HOME_SCREEN')" class='HOME_SCREEN'><a>Home</a></li>
+		<li onclick="openScreen('GAME_SCREEN')" class='GAME_SCREEN'><a>Map</a></li>
+		<li onclick="openScreen('CREATURE_SCREEN'); loadCreatures()" class="CREATURE_SCREEN"><a>Creatures</a></li>
+		<li onclick="openScreen('INFO_SCREEN')" class='INFO_SCREEN'><a>Information</a></li>
+		<li class="right"><a>Change Display</a></li> <!--this button pushes everything after it to the ride side-->
+		<li onclick="openScreen('OPTION_SCREEN')" class='OPTION_SCREEN'><a>Account</a></li>
+	</ul>
+</nav>
+</header>
+
+<!-- this is the homescreen should display information about the game and prompt the user to log in -->
+<div id="homeScreen" class="hidden screen">
+	<!--login
+    <div class="login-box">
+    	<h1>Login</h1>
+        <label for="username">Username:</label>
+        <input type="text" id="username" placeholder="Input Username" aria-label="Input Username">
+        <button onclick="login()">Start Exploring</button>
+    </div>-->
+</div>
+
+<div id="gameScreen" class="hidden screen">
+<!-- START OF GAME SCREEN --> 
+	<p>This is a demo version of (TITLE) for the 2026 Breaking Barriers, Building Bridges Hackathon!</p>
+	<div class="row">
+		<!-- map -->
+		<div id="map" class="column" style="height: 500px; width: 50%"></div>
+		<!-- location details panel -->
+		<div id="locationDetails" class="column">
+			<!-- title, always shows -->
+			<h1 id="locationName">Click on a map pin to show its details</h1>
+			<!-- location ratings subpanel, shows when location is targeted -->
+			<span id="locationRatings" class="hidden">
+				<b>Doors and Entrances:</b> <span id="ramps"></span> <!--should say things like "66% favorable" -->
+				<br>
+				<b>Walkways and Sidewalks:</b> <span id="walkways"></span>
+				<br>
+				<b>Doors and Entrances:</b> <span id="doors"></span>
+				<br>
+				<b>Signage:</b> <span id="signage"></span>
+				<button id="rateButton" onclick="rateLocation()">Rate This Location</button>
+			</span>
+				<!-- appears when rating -->
+				<div id="rating_container" class="hidden">
+					<b><div id="ratingPrompt"></div></b>
+					<div id="ratingTooltip"></div>
+				  	<form id="ratingForm">
+				  	    <fieldset>
+				  	      	<legend>Ramps / Step-Free Access</legend>
+				  	      	<label><input type="radio" name="ramps" value="true"> Yes</label>
+				  	      	<label><input type="radio" name="ramps" value="false"> No</label>
+				  	      	<button type="button" class="info-btn" data-info="RAMP CONDITIONS. If this place meets all of these conditions, click 'Yes.'">?</button>
+				  	    </fieldset>
+
+				  	    <fieldset>
+				  	      	<legend>Walkways / Sidewalks</legend>
+				  	      	<label><input type="radio" name="walkways" value="true"> Yes</label>
+				  	      	<label><input type="radio" name="walkways" value="false"> No</label>
+				  	      	<button type="button" class="info-btn" data-info="WALKWAY CONDITIONS. If this place meets all of these conditions, click 'Yes.'">?</button>
+				  	    </fieldset>
+
+				  	    <fieldset>
+				  	      	<legend>Doors / Entrances</legend>
+				  	      	<label><input type="radio" name="doors" value="true"> Yes</label>
+				  	      	<label><input type="radio" name="doors" value="false"> No</label>
+				  	      	<button type="button" class="info-btn" data-info="DOOR CONDITIONS. If this place meets all of these conditions, click 'Yes.'">?</button>
+				  	    </fieldset>
+
+				  	    <fieldset>
+				  	    	<legend>Signage</legend>
+				  	    	<label><input type="radio" name="signage" value="true"> Yes</label>
+				  	    	<label><input type="radio" name="signage" value="false"> No</label>
+				  	    	<button type="button" class="info-btn" data-info="SIGNAGE CONDITIONS. If this place meets all of these conditions, click 'Yes.'">?</button>
+				  	    </fieldset>
+				  	    <br>
+				  	    <button type="submit">Submit Rating</button>
+			  	  </form>
+				</div>
+		</div>
+	</div>
+<!-- END OF GAME SCREEN -->
+</div>
+
+<div id="creatureScreen" class="hidden screen">
+<!-- START OF CREATURES SCREEN -->
+	<div id="creatureNavigation">
+	</div>
+	<div id="creatureDisplay">
+	</div>
+</div>
+
+<div id="infoScreen" class="hidden screen">
+<!-- START OF INFORMATION SCREEN -->
+	<article>
+		<h1>Rating A Location</h1>
+		To rate a nearby location, click on its corresponding pin on the map. Then, tap the button that reads "Rate This Location." You will then be prompted to submit a rating for this location by answering "Yes" or "No" to a number of accessibility criteria.
+
+		<h2>Responsible Rating Rules</h2>
+		In order to ensure rating accuracy and usability for other users, we highly encourage users to 
+	</article>
+</div>
+<div id="optionScreen" class="hidden screen">
+<!-- START OF OPTION SCREEN -->
+	<h1>Account Settings</h1>
+	<b>User ID:</b> <span id="UUID_display"></span>
+	<hr>
+	<h2>User Health Info</h2>
+	<label><input type="checkbox">Physical Disability</label>
+	<br>
+	<label><input type="checkbox">Vision Impairments</label>
+	<br>
+	<label><input type="checkbox">Cognitive Function/Neurodivergence</label>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

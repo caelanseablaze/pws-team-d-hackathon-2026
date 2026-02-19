@@ -1,0 +1,139 @@
+/* UNIVERSAL */
+body {
+    /* background and text colors */
+    --parchment-light: #f2e6cc; /*light color*/
+    --parchment: #e4d5b7; /*background color*/
+    --parchment-dark: #c9b48a; /*background accent*/
+    --ink: #2b2620; /*text color*/
+
+    /* border colors */
+    --wood: #5a3e2b; /*accent dark color*/
+    --wood-light: #7d6555; /*accent not-so-dark color*/
+
+    /* accent colors */
+    --accent-alchemy: #7a5c9e; /*purple alchemy accent*/
+    --accent-alchemy-medium: #a085d7;
+    --accent-gold: #c69738; /*gold accent*/
+    --accent-silver: #85878e; /*silver accent*/
+    --glass-border: #a4ade3; /*glass bottle border*/
+    --glass-background: rgba(210, 215, 246, 0.6); /*partially transparent glass color*/
+
+    /* elemental colors */
+    --fire-color1: #c23a2b;
+
+    /* ACTUAL BODY FORMATTING */
+    margin: 0px;
+    background-color: var(--parchment-light);
+    color: var(--ink);
+    font-size: 18px;
+    font-family: "Roboto", sans-serif;
+}
+
+header {
+    margin: 0px;
+    padding: 0px;
+    background-color: var(--wood-light);
+}
+h1 {
+    font-family: "Pixelify Sans", sans-serif;
+    font-style: normal;
+}
+#banner img {
+    width: 100%;
+    /* fix sizing later. maximum height 200px. don't break the code*/
+    height: 200px;
+}
+
+.row {
+  display: flex;
+}
+.column {
+  flex: 50%;
+  padding: 10px;
+}
+.hidden {
+    display: none;
+}
+
+button {
+    font-family: "Pixelify Sans", sans-serif;
+    font-size: 18px;
+    border: 3px solid var(--parchment-dark);
+    padding: 7px;
+    background-color: var(--parchment-light);
+    box-shadow: 0px 0px 0px 2px var(--ink), 0px 0px 0px 2px var(--wood) inset;
+}
+button.info-btn {
+    border-radius: 360px;
+}
+
+hr {
+    border: 2px solid var(--wood);
+}
+/* NAVIGATION BAR */
+nav {
+    margin: 0px;
+}
+nav ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    display: flex;
+    justify-content: left;
+    /* appearance */
+    background-color: var(--wood);
+    border: 2px solid var(--wood);
+}
+nav ul li {
+    padding: 15px;
+    /* appearance*/
+    text-align: center;
+    background-color: var(--accent-alchemy);
+    border-right: 2px solid var(--wood);
+    color: var(--parchment-light);
+    font-family: "Pixelify Sans", sans-serif;
+    /* animation */
+    transition: background-color, color 0.2s ease;
+}
+nav ul li:hover, nav ul li.active {
+    color: var(--ink);
+    background-color: var(--accent-alchemy-medium);
+}
+nav ul li.right {
+    margin-left: auto;
+}
+
+/* ALL SCREENS */
+div.screen {
+    background-color: var(--parchment);
+    border: 10px ridge var(--wood-light);
+    margin: 30px;
+    padding: 20px;
+}
+
+/* HOME SCREEN */
+div.login-box {
+}
+
+/* GAME SCREEN */
+#locationDetails {
+    background-color: var(--parchment-light);
+    border: 4px solid var(--wood);
+    padding: 15px;
+    text-align: center; 
+}
+#locationRatings:not(.hidden) {
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    display: block;
+    padding: 10px;
+}
+#rateButton:not(.hidden) {
+    display: block;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+#rating_container {
+    margin-top: 15px;
+}
