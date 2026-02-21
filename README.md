@@ -9,13 +9,15 @@ Enjoy!
 
 ## Features
 - You can rate two location in the "Map" page: PAREF Woodrose School and Alabang Country Club. Both locations display ratings that are not fully accurate to real life, but exist to demonstrate the system. Submitting a complete rating to a location for the first time awards a randomly-generated blob creature. You may submit an incomplete rating, but a blob will not be awarded unless it is complete.
+- In order to ensure that a user can only submit and update one rating, a randomly-generated ID is written to their device's local storage. 
 - You can view collected creatures in the "Creatures" page. Blobs come with a name, a magical element, and a few unique traits that show on their sprites.
 - The "Information" page contains a basic game tutorial and accessibility information based on Philippine laws.
 - There are checkboxes in the "account" page that currently do nothing, but would be important in the future.
 - Certain elements may have screen reader support, but that is currently untested.
-- Elements resize responsively on various screen sizes.
+- Elements resize responsively on various screen sizes. This includes the header elements, the map section, and the creatures page.
 - Pixel art and graphics, with shading!
 
+Artificial intelligence was used in the debugging of this program. However, all art, concept, and writing was done by a human.
 ---
 
 Made by:
