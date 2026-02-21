@@ -1,4 +1,12 @@
 /* UNIVERSAL */
+@font-face {
+  font-family: 'Alagard'; 
+  src: url('fonts/alagard.woff2') format('woff2'),
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Controls font loading behavior */
+}
+
 body {
     /* background and text colors */
     --parchment-light: #f2e6cc; /*light color*/
@@ -35,24 +43,77 @@ header {
     background-color: var(--wood-light);
 }
 h1 {
-    font-family: "Pixelify Sans", sans-serif;
+    font-family: "Alagard", serif;
     font-style: normal;
 }
-#banner img {
-    width: 100%;
-    /* fix sizing later. maximum height 200px. don't break the code*/
-    height: 200px;
+h2, h3 {
+    font-family: "Pixelify Sans", sans-serif;
 }
 
+a:not(nav ul li a) {
+    text-decoration: underline dotted;
+}
+
+/* BANNER */
+#banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--wood);
+    height: 150px;
+    overflow: hidden;
+}
+
+#banner img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    flex-shrink: 1;
+}
+#banner img.logo {
+    width: 40%;
+    image-rendering: pixelated;
+}
+#banner img.headerbanner {
+    /* fix sizing later. maximum height 200px. don't break the code*/
+    max-width: 100%;
+    width: auto; 
+    height: 150px;
+    image-rendering: pixelated;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+@media (max-width: 600px) {
+    #banner img.headerbanner {
+        display: none;
+    }
+    #banner img.logo {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* thank you w3schools */
 .row {
   display: flex;
 }
+
 .column {
-  flex: 50%;
+  flex: 1;
   padding: 10px;
 }
-.hidden {
-    display: none;
+
+#map {
+    height: 500px;
+}
+@media screen and (max-width: 600px) {
+  .row {
+    /*flex-direction: column;*/
+    display: block;
+  }
+  #map {
+    height: 500px;
+  }
 }
 
 button {
@@ -63,13 +124,26 @@ button {
     background-color: var(--parchment-light);
     box-shadow: 0px 0px 0px 2px var(--ink), 0px 0px 0px 2px var(--wood) inset;
 }
+
+/* informational buttons */
 button.info-btn {
     border-radius: 360px;
+}
+#ratingTooltip {
+    position: absolute;
+    max-width: 250px;
+    padding: 8px 10px;
+    background-color: var(--parchment-light);
+    border: 2px solid var(--wood);
+    border-radius: 6px;
+
+    z-index: 9999;
 }
 
 hr {
     border: 2px solid var(--wood);
 }
+
 /* NAVIGATION BAR */
 nav {
     margin: 0px;
@@ -103,17 +177,34 @@ nav ul li:hover, nav ul li.active {
 nav ul li.right {
     margin-left: auto;
 }
+nav ul li img.menuicon {
+    width: auto;
+    image-rendering: pixelated;
+}
 
 /* ALL SCREENS */
 div.screen {
     background-color: var(--parchment);
-    border: 10px ridge var(--wood-light);
+
+    /* border */
+    border: 10px solid var(--wood-light);
+    box-shadow: 0px 0px 0px 4px var(--ink), 0px 0px 0px 4px var(--wood) inset;
+
     margin: 30px;
     padding: 20px;
 }
 
 /* HOME SCREEN */
+#randomblobdisplay {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+#randomblobdisplay .blob-container {
+    display: inline-block;
+}
 div.login-box {
+    /* legitimately never finsihed this */
 }
 
 /* GAME SCREEN */
@@ -129,6 +220,50 @@ div.login-box {
     display: block;
     padding: 10px;
 }
+/* rating average display */
+.rating-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0;
+}
+
+.rating-label {
+    width: 90px;
+    font-family: "Pixelify Sans", sans-serif;
+    font-weight: bold;
+}
+
+.rating-bar {
+    position: relative;
+    flex: 1;
+    height: 20px;
+    background-color: var(--glass-background);
+    border: 2px solid var(--accent-silver);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.rating-fill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--accent-alchemy);
+    transition: width 0.4s ease;
+}
+
+.rating-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--ink);
+    pointer-events: none;
+}
+/* end of rating average display */
+/* start of rating form */
 #rateButton:not(.hidden) {
     display: block;
     margin: 0 auto;
@@ -136,4 +271,206 @@ div.login-box {
 }
 #rating_container {
     margin-top: 15px;
+}
+
+#ratingForm fieldset {
+    display: grid;
+    grid-template-columns: 240px auto auto;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    margin-bottom: 12px;
+}
+
+#ratingForm legend {
+    grid-column: 1;
+    margin: 0;
+}
+
+#ratingForm label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 260px auto auto;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 5px;
+}
+
+.form-row label {
+    padding: 5px;
+    /* appearance */
+    border: 2px solid var(--wood-light);
+    box-shadow: 0px 0px 0px 2px var(--ink), 0px 0px 0px 2px var(--wood) inset;
+    border-radius: 30px;
+
+    /* transition */
+    transition: background-color 0.1s ease;
+}
+.form-row label:has(input[type="radio"]:checked) {
+    background-color: var(--accent-alchemy-medium);
+}
+.form-row input[type="radio"][value="true"] {
+    accent-color: var(--accent-alchemy);
+}
+.form-row input[type="radio"][value="false"] {
+    accent-color: var(--accent-alchemy);
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    /* appearance */
+    border: 4px solid var(--parchment-dark);
+    box-shadow: 0px 0px 0px 2px var(--ink), 0px 0px 0px 2px var(--wood) inset;
+    background-color: var(--glass-background);
+}
+.form-label span {
+    margin-right: auto;
+    padding: 5px;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        display: block;
+    }
+}
+
+.newBlobAnnouncementBox {
+    padding: 15px; 
+    margin: 15px;
+    /* appearance */
+    border: 4px solid var(--accent-gold);
+    box-shadow: 0px 0px 0px 2px var(--ink), 0px 0px 0px 2px var(--wood) inset;
+}
+.newBlobAnnouncementBox .scrollIcon span {
+    font-family: "Pixelify Sans", sans-serif;
+}
+
+/* BLOB IMAGE DISPLAYING */
+/* controls layering */
+.blob-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+.blob-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
+    /* DO NOT CHANGE THIS. IT MAKES IT LOOK RIGHT */
+    pointer-events: none;
+    image-rendering: pixelated;
+}
+
+.screenBlendMode {
+    mix-blend-mode: screen;
+}
+.colorburnBlendMode {
+    mix-blend-mode: color-burn;
+}
+.overlayBlendMode {
+    mix-blend-mode: overlay;
+}
+
+/* scroll-type icon in the creature navigation screen thing */
+#creatureNavigation {
+    /* positioning */
+    width: 100%;
+    height: 150px;
+    display: flex;
+    /* horizontal scrolling */
+    overflow-x: auto; 
+    overflow-y: hidden; 
+    /*white-space: nowrap; */
+}
+
+/*#creatureNavigation*/ .scrollIcon {
+    /* positioning */
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 120px;
+    height: 120px;
+    margin: 10px;
+
+    flex: 0 0 auto;
+
+    /* appearance */
+    border: 3px solid var(--wood-light);
+    box-shadow: 0px 0px 0px 2px var(--ink), 0px 0px 0px 2px var(--wood) inset;
+    text-align: center;
+    background-color: var(--parchment-light);
+
+    /* transition */
+    transition: transform 0.2s ease;
+}
+
+#creatureNavigation .scrollIcon span {
+    font-family: "Pixelify Sans", sans-serif;
+}
+
+.scrollIcon:hover {
+    transform: translateY(-3px);
+}
+
+/* other */
+.creature-card {
+    /* appearance */
+    padding: 10px;
+    border: 8px solid var(--parchment-dark);
+    box-shadow: 0px 0px 0px 2px var(--ink), 0px 0px 0px 2px var(--wood) inset;
+    background-color: var(--parchment-light);
+}
+
+/* INFORMATION */
+.info-toggle {
+    margin-bottom: 1rem;
+}
+
+.info-toggle button {
+    margin: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    /* appearance */
+    transition: background-color 0.1s ease;
+}
+
+.info-toggle button.active {
+    background-color: var(--parchment-dark);
+}
+
+article {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.elementicon {
+    height: 16px;
+    image-rendering: pixelated;
+}
+
+/* seat of royalty for the Hidden class */
+.hidden {
+    display: none;
+}
+
+/* seat of royalty for the last minute footer i added */
+footer {
+    padding: 20px;
+    background-color: var(--parchment-dark);
+    border-top: 2px solid var(--wood);
 }

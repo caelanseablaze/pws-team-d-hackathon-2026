@@ -29,21 +29,36 @@ To-Do:
 
 <!-- this content appears everywhere -->
 <header>
-<div id="banner" height="200px"><img aria-label="Placeholder header image" width=100%></div>
+<div id="banner" height="200px"><img src="images/logo-main.PNG" alt="The Adventure AID logo" class="logo"><img src="images/banner-main.PNG" alt="A banner showing an assortment of objects on a shelf" class="headerbanner"></div>
 <nav>
 	<ul>
-		<li onclick="openScreen('HOME_SCREEN')" class='HOME_SCREEN'><a>Home</a></li>
-		<li onclick="openScreen('GAME_SCREEN')" class='GAME_SCREEN'><a>Map</a></li>
-		<li onclick="openScreen('CREATURE_SCREEN'); loadCreatures()" class="CREATURE_SCREEN"><a>Creatures</a></li>
-		<li onclick="openScreen('INFO_SCREEN')" class='INFO_SCREEN'><a>Information</a></li>
-		<li class="right"><a>Change Display</a></li> <!--this button pushes everything after it to the ride side-->
-		<li onclick="openScreen('OPTION_SCREEN')" class='OPTION_SCREEN'><a>Account</a></li>
+		<li onclick="openScreen('HOME_SCREEN')" class='HOME_SCREEN'><img src="images/home-icon.png" alt="A home icon" class="menuicon"><a>Home</a></li>
+		<li onclick="openScreen('GAME_SCREEN')" class='GAME_SCREEN'><img src="images/map-icon.png" alt="A map icon" class="menuicon"><a>Map</a></li>
+		<li onclick="openScreen('CREATURE_SCREEN'); loadCreatures()" class="CREATURE_SCREEN"><img src="images/creature-icon.png" alt="A creature icon" class="menuicon"><a>Creatures</a></li>
+		<li onclick="openScreen('INFO_SCREEN')" class='INFO_SCREEN'><img src="images/info-icon.png" alt="A book icon" class="menuicon"><a>Information</a></li>
+		<!--<li class="right" style="background-color: var(--accent-silver)"><img src="images/display-icon.png" alt="A paintbrush icon" class="menuicon"><a>Change Display</a></li>--><!--this button pushes everything after it to the ride side-->
+		<li class="right" onclick="openScreen('OPTION_SCREEN')" class='OPTION_SCREEN'><img src="images/user-icon.png" alt="A user icon" class="menuicon"><a>Account</a></li>
 	</ul>
 </nav>
 </header>
 
 <!-- this is the homescreen should display information about the game and prompt the user to log in -->
 <div id="homeScreen" class="hidden screen">
+	<h1 style="text-align: center; font-size: 5vw; margin-bottom: 0px;">Welcome to Adventure AID!</h1>
+	<hr>
+	<center style="font-size: 26px; font-family: 'Pixelify Sans', sans-serif">
+		<p>You wake up in a strange-looking, yet familiar landscape, wearing outlandish clothes you didn't own before. Checking your pocket, you find a lightly crumpled map. As you stare at it in confusion, a purple dotted line begins to make its way across...</p>
+		<p>...Perhaps if you go on this adventure, you'll find your place in this world.</p>
+	</center>
+	<center style='padding: 20px; border: 5px solid var(--wood); margin: 20px'>
+		<img src="images/logo-main-transparent.PNG" alt="The Adventure AID logo" style="width: 40%; image-rendering: pixelated;">
+		<p>This is a prototype submitted by PAREF Woodrose Senior Team D for the 2026 Breaking Barriers, Building Bridges Hackathon! Because of this, refreshing the page will not save changes you make.</p>
+		<p>Adventure AID is a game where you explore and rate the accessibility of real-world public spaces. You won't be alone though–wherever you go, you might find fantastical creatures to accompany you. Plus, playing and contributing ratings also helps everyone, particularly Persons With Disability (PWDs) to navigate, access safe, inclusive spaces, and overall have a little more whimsy in life.</p>
+		<p>To get you started, consider checking out your <b><a onclick="openScreen('GAME_SCREEN')">Map.</a></b> There are two sample locations for you to test out the rating feature. You can also check out the <b><a onclick="openScreen('CREATURE_SCREEN'); loadCreatures()">Creatures</a></b> you've collected, or read up on some <b><a onclick="openScreen('INFO_SCREEN');">Information</a></b>. The choice is yours!</p>
+		<p>In the future, you may also opt to input some of your health information in your <b><a onclick="openScreen('OPTION_SCREEN')">Account</a></b>. This feature isn't fully implemented yet, but it will be used with Artificial Intelligence (AI) to provide recommendations for spaces that suit your specific needs. This will be secure, but you would be able to opt out of this at any time. For now, the prototype has no "real AI" and any information you provide is stored solely in this page.</p>
+
+		<div id="randomblobdisplay" alt="A display containing 6 randomized blob creatures."></div>
+	</center>
 	<!--login
     <div class="login-box">
     	<h1>Login</h1>
@@ -55,68 +70,129 @@ To-Do:
 
 <div id="gameScreen" class="hidden screen">
 <!-- START OF GAME SCREEN --> 
-	<p>This is a demo version of (TITLE) for the 2026 Breaking Barriers, Building Bridges Hackathon!</p>
 	<div class="row">
 		<!-- map -->
-		<div id="map" class="column" style="height: 500px; width: 50%"></div>
+		<div id="map" class="column" style=""></div>
 		<!-- location details panel -->
 		<div id="locationDetails" class="column">
 			<!-- title, always shows -->
 			<h1 id="locationName">Click on a map pin to show its details</h1>
 			<!-- location ratings subpanel, shows when location is targeted -->
 			<span id="locationRatings" class="hidden">
-				<b>Doors and Entrances:</b> <span id="ramps"></span> <!--should say things like "66% favorable" -->
-				<br>
-				<b>Walkways and Sidewalks:</b> <span id="walkways"></span>
-				<br>
-				<b>Doors and Entrances:</b> <span id="doors"></span>
-				<br>
-				<b>Signage:</b> <span id="signage"></span>
+				<!-- ramps rating display -->
+				<div class="rating-row">
+					<span class="rating-label">Ramps</span>
+
+					<div class="rating-bar">
+				    	<div class="rating-fill" id="rampsFill"></div>
+				    	<span class="rating-text" id="rampsText">0%</span>
+				  	</div>
+
+				  	<button class="info-btn" 
+				  		data-info="This percentage reflects how many users marked 'Yes' for ramps."
+				  	>?</button>
+				</div>
+				<!-- Walkways rating display --> 
+				<div class="rating-row">
+					<span class="rating-label">Walkways</span>
+
+					<div class="rating-bar">
+				    	<div class="rating-fill" id="walkwaysFill"></div>
+				    	<span class="rating-text" id="walkwaysText">0%</span>
+				  	</div>
+
+				  	<button class="info-btn" 
+				  		data-info="This percentage reflects how many users marked 'Yes' for walkways."
+				  	>?</button>
+				</div>
+				<!-- Doors and entrances rating display --> 
+				<div class="rating-row">
+					<span class="rating-label">Doors</span>
+
+					<div class="rating-bar">
+				    	<div class="rating-fill" id="doorsFill"></div>
+				    	<span class="rating-text" id="doorsText">0%</span>
+				  	</div>
+
+				  	<button class="info-btn" 
+				  		data-info="This percentage reflects how many users marked 'Yes' for doors and entrances."
+				  	>?</button>
+				</div>
+				<!-- Signage rating display --> 
+				<div class="rating-row">
+					<span class="rating-label">Signage</span>
+
+					<div class="rating-bar">
+				    	<div class="rating-fill" id="signageFill"></div>
+				    	<span class="rating-text" id="signageText">0%</span>
+				  	</div>
+
+				  	<button class="info-btn" 
+				  		data-info="This percentage reflects how many users marked 'Yes' for signage."
+				  	>?</button>
+				</div>
 				<button id="rateButton" onclick="rateLocation()">Rate This Location</button>
 			</span>
 				<!-- appears when rating -->
 				<div id="rating_container" class="hidden">
 					<b><div id="ratingPrompt"></div></b>
-					<div id="ratingTooltip"></div>
 				  	<form id="ratingForm">
-				  	    <fieldset>
-				  	      	<legend>Ramps / Step-Free Access</legend>
-				  	      	<label><input type="radio" name="ramps" value="true"> Yes</label>
-				  	      	<label><input type="radio" name="ramps" value="false"> No</label>
-				  	      	<button type="button" class="info-btn" data-info="RAMP CONDITIONS. If this place meets all of these conditions, click 'Yes.'">?</button>
-				  	    </fieldset>
+				  		<!-- ramps -->
+				  	    <div class="form-row">
+				  	        <div class="form-label">
+				  	            <span>Ramps/Step-Free Access</span>
+				  	            <button type="button" class="info-btn" 
+				  	         		data-info="<b>Ramp Rating</b><br>See the <a onclick=openScreen('INFO_SCREEN')>information</a> page for more specific details. For a general rating, ask yourself:<ul><li>Are there ramps, lifts, or escalators here as an alternative to staircases?</li><li>Is the ramp wide enough for a wheelchair?</li><li>Is the ramp slope gentle, and not overly steep?</li><li>If there are no ramps, are there other devices like dropped sidewalks, curb ramps, or elevators?</li></ul>If this location meets these conditions, click 'Yes.'"
+				  	            >?</button>
+				  	        </div>
 
-				  	    <fieldset>
-				  	      	<legend>Walkways / Sidewalks</legend>
-				  	      	<label><input type="radio" name="walkways" value="true"> Yes</label>
-				  	      	<label><input type="radio" name="walkways" value="false"> No</label>
-				  	      	<button type="button" class="info-btn" data-info="WALKWAY CONDITIONS. If this place meets all of these conditions, click 'Yes.'">?</button>
-				  	    </fieldset>
+				  	        <label><input type="radio" name="ramps" value="true"> Yes</label>
+				  	        <label><input type="radio" name="ramps" value="false"> No</label>
+				  	    </div>
+				  	    <!-- walkways -->
+				  	    <div class="form-row">
+				  	        <div class="form-label">
+				  	            <span>Walkways/Sidewalks</span>
+				  	            <button type="button" class="info-btn" data-info="<b>Walkway and Sidewalk Rating</b><br>See the <a onclick=openScreen('INFO_SCREEN')>information</a> page for more specific details. For a general rating, ask yourself:<ul><li>Are there walkways wide enough for a wheelchair?</li><li>If there is a slope, is it gentle, and not overly steep?</li><li>Is the walkway smooth, level, and free of obstruction?</li></ul>If this location meets these conditions, click 'Yes.'">?</button>
+				  	        </div>
 
-				  	    <fieldset>
-				  	      	<legend>Doors / Entrances</legend>
-				  	      	<label><input type="radio" name="doors" value="true"> Yes</label>
-				  	      	<label><input type="radio" name="doors" value="false"> No</label>
-				  	      	<button type="button" class="info-btn" data-info="DOOR CONDITIONS. If this place meets all of these conditions, click 'Yes.'">?</button>
-				  	    </fieldset>
+				  	        <label><input type="radio" name="walkways" value="true"> Yes</label>
+				  	        <label><input type="radio" name="walkways" value="false"> No</label>
+				  	    </div>
+				  	    <!-- doors -->
+				  	    <div class="form-row">
+				  	        <div class="form-label">
+				  	            <span>Doors/Entrances</span>
+				  	            <button type="button" class="info-btn" data-info="<b>Door and Entrance Rating</b><br>See the <a onclick=openScreen('INFO_SCREEN')>information</a> page for more specific details. For a general rating, ask yourself:<ul><li>Are entrances in/out of this location wide enough for a wheelchair?</li><li>Are all entrances to this location directly accessible (not out of the way)?</li><li>If the entrances are not level, are there other ways to access this location?</li><li>Are glass doors/panels clearly marked?</li><li>Are doors easy to open?</li></ul>If this location meets these conditions, click 'Yes.'">?</button>
+				  	        </div>
 
-				  	    <fieldset>
-				  	    	<legend>Signage</legend>
-				  	    	<label><input type="radio" name="signage" value="true"> Yes</label>
-				  	    	<label><input type="radio" name="signage" value="false"> No</label>
-				  	    	<button type="button" class="info-btn" data-info="SIGNAGE CONDITIONS. If this place meets all of these conditions, click 'Yes.'">?</button>
-				  	    </fieldset>
+				  	        <label><input type="radio" name="doors" value="true"> Yes</label>
+				  	        <label><input type="radio" name="doors" value="false"> No</label>
+				  	    </div>
+				  	    <!-- signage -->
+				  	    <div class="form-row">
+				  	        <div class="form-label">
+				  	            <span>Signage</span>
+				  	            <button type="button" class="info-btn" data-info="If this location meets all of these conditions, click 'Yes.'">?</button>
+				  	        </div>
+
+				  	        <label><input type="radio" name="signage" value="true"> Yes</label>
+				  	        <label><input type="radio" name="signage" value="false"> No</label>
+				  	    </div>
 				  	    <br>
 				  	    <button type="submit">Submit Rating</button>
 			  	  </form>
 				</div>
 		</div>
 	</div>
+
 <!-- END OF GAME SCREEN -->
 </div>
 
 <div id="creatureScreen" class="hidden screen">
 <!-- START OF CREATURES SCREEN -->
+	<h1>Creatures</h1>
+	<p>Click a creature to display information about it.</p>
 	<div id="creatureNavigation">
 	</div>
 	<div id="creatureDisplay">
@@ -125,12 +201,211 @@ To-Do:
 
 <div id="infoScreen" class="hidden screen">
 <!-- START OF INFORMATION SCREEN -->
-	<article>
-		<h1>Rating A Location</h1>
-		To rate a nearby location, click on its corresponding pin on the map. Then, tap the button that reads "Rate This Location." You will then be prompted to submit a rating for this location by answering "Yes" or "No" to a number of accessibility criteria.
+	<!-- Toggle Buttons -->
+	<div class="info-toggle">
+	<button onclick="showInfo('tutorial')" id="tutorialBtn">Game Tutorial</button>
+	<button onclick="showInfo('accessibility')" id="accessibilityBtn">Accessibility Info</button>
+	</div>
 
-		<h2>Responsible Rating Rules</h2>
-		In order to ensure rating accuracy and usability for other users, we highly encourage users to 
+	<article id="accessibilityArticle">
+		<h1>Rating A Location</h1>
+		To rate a nearby location, click on its corresponding pin on the map. Then, tap the button that reads "Rate This Location." You will then be prompted to submit a rating for this location by answering "Yes" or "No" to a number of accessibility criteria. Try to assess whether the space is usable for people with mobility problems, vision problems, or other disabilities.
+
+
+		<h2>Responsible Rating</h2>
+		In order to ensure rating accuracy and usability for other users, we highly encourage users to keep these guidelines in mind while rating locations. In the future, we will add the ability to upload photos of a location in order to further verify their ratings. 
+
+		Note that this is based on Philippine law, more specifically <a href="https://https://ncda.gov.ph/revised-2024-rules-and-regulations-implementing-batas-pambansa-344/">Batas Pambansa (BP) 344</a> and Republic Act (RA) 7277, the Magna Carta for Disabled Persons. However, Adventure AID is not affiliated with the government. If you would like more details, researching these laws is a good place to start.
+
+		<h1>Accessibility Standards Guide</h1>
+
+		<ul>
+
+		  <li><strong>Ramps</strong>
+		    <ul>
+		      <li>Minimum clear width: 1.20 m (1200 mm)</li>
+		      <li>Maximum gradient:
+		        <ul>
+		          <li>Preferred: 1:20</li>
+		          <li>Maximum: 1:12 (special cases depending on vertical length)</li>
+		        </ul>
+		      </li>
+		      <li>Landings required every 1.50 m, 1.80 m, or 2.0 m vertical rise</li>
+		      <li>Minimum landing length: 1.50 m</li>
+		      <li>Required whenever there is a change in level unless served by:
+		        <ul>
+		          <li>Dropped sidewalk</li>
+		          <li>Curb ramp</li>
+		          <li>Elevator</li>
+		          <li>Mechanical device</li>
+		        </ul>
+		      </li>
+		      <li>Complementary ramps, lifts, or escalators required when staircases exist along accessible routes</li>
+		    </ul>
+		  </li>
+
+		  <li><strong>Walkways</strong>
+		    <ul>
+		      <li>Minimum width: 1.20 m</li>
+		      <li>Maximum gradient: 1:20</li>
+		      <li>Must be smooth, unobstructed, and barrier-free</li>
+		    </ul>
+		  </li>
+
+		  <li><strong>Doors & Entrances</strong>
+		    <ul>
+		      <li>Minimum clear door width:
+		        <ul>
+		          <li>900 mm (standard)</li>
+		          <li>1800 mm (double doors)</li>
+		        </ul>
+		      </li>
+		      <li>Handles positioned between 900 mm – 1200 mm above floor</li>
+		      <li>Accessible entrances:
+		        <ul>
+		          <li>All public entrances must be accessible (except restricted/service)</li>
+		          <li>Accessible route must be direct (no detours)</li>
+		          <li>Ramps/lifts required if entrance is not level</li>
+		          <li>Vestibules must allow wheelchair maneuvering space</li>
+		          <li>Weather protection required (rain & heat)</li>
+		        </ul>
+		      </li>
+		      <li>Door Requirements:
+		        <ul>
+		          <li>Adequate clear floor space before and after door</li>
+		          <li>Low opening force (automatic preferred)</li>
+		          <li>Hardware usable without tight grasping or twisting</li>
+		          <li>Slow-closing swing doors for safety</li>
+		          <li>Swing-out doors for toilets, storage, closets</li>
+		          <li>Kick plates on major circulation routes</li>
+		          <li>No sharp edges</li>
+		          <li>30% visual contrast for doors, frames, hardware</li>
+		        </ul>
+		      </li>
+		      <li>Vision & Safety:
+		        <ul>
+		          <li>Vision panels required on accessible-route doors</li>
+		          <li>Panels visible to wheelchair users</li>
+		          <li>Glass doors must have visible high-contrast markings</li>
+		        </ul>
+		      </li>
+		      <li>Automatic Doors:
+		        <ul>
+		          <li>Must allow safe passing time</li>
+		          <li>Must work manually if power fails</li>
+		          <li>Control buttons reachable and easy to use</li>
+		        </ul>
+		      </li>
+		      <li>Thresholds:
+		        <ul>
+		          <li>Maximum height: 12 mm</li>
+		          <li>Beveled if over 6 mm</li>
+		        </ul>
+		      </li>
+		    </ul>
+		  </li>
+
+		  <li><strong>Toilets & Bathrooms</strong>
+		    <ul>
+		      <li>Minimum size: 1.70 m × 1.80 m</li>
+		      <li>Grab bars required</li>
+		      <li>At least one toilet seat at 0.45 m height</li>
+		    </ul>
+		  </li>
+
+		  <li><strong>Parking</strong>
+		    <ul>
+		      <li>Accessible parking slots: 3.70 m wide</li>
+		      <li>Located near entrances</li>
+		      <li>Clear signage required</li>
+		    </ul>
+		  </li>
+
+		  <li><strong>Handrails</strong>
+		    <ul>
+		      <li>Installed at 0.70 m and 0.90 m above floor</li>
+		      <li>50 mm clearance from wall</li>
+		    </ul>
+		  </li>
+
+		  <li><strong>Signage</strong>
+		    <ul>
+		      <li>International Symbol of Access required for accessibility features</li>
+		      <li>Directional and information signage required</li>
+		      <li>Minimum 30% color contrast</li>
+		      <li>Letter size proportional to viewing distance</li>
+		      <li>Mounting height: max 1500 mm (center of sign)</li>
+		      <li>Minimum sign size: 200 mm × 200 mm</li>
+		      <li>Door signs for accessible toilets/showers: 200 mm × 200 mm</li>
+		      <li>Symbols should face right (use arrows if left)</li>
+		      <li>Must include graphics, text, embossed tactile characters (min 1 mm height), and Braille</li>
+		      <li>Tactile maps required for visually impaired users</li>
+		      <li>Signs must not:
+		        <ul>
+		          <li>Protrude more than 100 mm from walls</li>
+		          <li>Be mounted between 400 mm – 2000 mm height in hazardous ways</li>
+		          <li>Intrude into walkways below 2200 mm clearance</li>
+		        </ul>
+		      </li>
+		    </ul>
+		  </li>
+
+		  <li><strong>Streets & Pedestrian Crossings</strong>
+		    <ul>
+		      <li>Must be barrier-free</li>
+		      <li>Cut-out curbs and ramps required</li>
+		      <li>Audio-visual pedestrian crossing aids required</li>
+		      <li>Accessibility applies to newly constructed areas</li>
+		      <li>When streets are repaired or renovated, accessibility must be added if crossings are affected</li>
+		      <li>Overpasses/underpasses may be exempt in some cases</li>
+		    </ul>
+		  </li>
+
+		  <li><strong>Public Transportation</strong>
+		    <ul>
+		      <li>No franchise/license unless:
+		        <ul>
+		          <li>Designated seating for PWDs provided</li>
+		          <li>Audio-visual aids installed</li>
+		        </ul>
+		      </li>
+		      <li>Applies to:
+		        <ul>
+		          <li>Buses</li>
+		          <li>Passenger boats & ships</li>
+		          <li>Domestic airplanes</li>
+		          <li>Trains (including light rail)</li>
+		        </ul>
+		      </li>
+		      <li>Existing vehicles being repaired or renovated must comply</li>
+		    </ul>
+		  </li>
+
+		  <li><strong>Public Telephones</strong>
+		    <ul>
+		      <li>At least 1 in every 4 must be accessible</li>
+		      <li>If only one exists, it must be accessible</li>
+		      <li>Must include visual aids</li>
+		    </ul>
+		  </li>
+
+		  <li><strong>Public Transport Terminals</strong>
+		    <ul>
+		      <li>Must follow accessibility standards for public buildings</li>
+		      <li>Applies to bus, train, ship, and airport terminals</li>
+		    </ul>
+		  </li>
+
+		</ul>
+	</article>
+
+	<article id="tutorialArticle" class="hidden">
+	    <h1>How to Play</h1>
+	    <p>Click on a nearby map pin to view its accessibility ratings. The percentages reflect the number of users who rated "yes" for a given feature.</p>
+	    <p>Press "Rate This Location" to submit your own rating.</p>
+	    <p>Click "yes" or "no" to indicate your rating. You may leave some parts blank if you are unsure.</p>
+	    <p>Please answer to the best of your ability, and try to consider the guidelines in <a onclick="showInfo('accessibility')">this article</a>.</p>
+	    <p>Submit a complete rating to earn a new creature! If you left any fields blank, you will not earn a new creature until you go back and update the rating.</p>
 	</article>
 </div>
 <div id="optionScreen" class="hidden screen">
@@ -146,6 +421,26 @@ To-Do:
 	<label><input type="checkbox">Cognitive Function/Neurodivergence</label>
 </div>
 
+<div id="ratingTooltip" class="hidden"></div>
+
 <script src="app.js"></script>
 </body>
+<footer class="row">
+	<div class="column">
+		<p style="font-weight: bold; font-family: 'Alagard', sans-serif; font-size: 25px; margin-top: 0px">Adventure AID</p>
+		This is a prototype created for the 2026 Breaking Barriers, Building Bridges Hackathon by PAREF Woodrose Senior Team D.
+		<br><a style="color: var(--ink)" href="github link here">Github project repository</a>
+		<br><br>
+		Note: Refreshing the page resets all changes!
+	</div>
+	<div class="column" style="align-content: top">
+		<b>Made with <3 by:</b>
+		<br>Annika Abad (pitch)
+		<br>Caylie del Rosario (graphics, code)
+		<br>Sofia Gutierrez (research, writing)
+		<br>Isabel Unjieng (pitch)
+		<br>
+		<br>Special thanks to Miss Myra Delgado, faculty moderator, and Miss Ellaine Morales, team mentor
+	</div>
+</footer>
 </html>
