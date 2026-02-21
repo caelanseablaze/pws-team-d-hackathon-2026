@@ -1,9 +1,11 @@
 # Adventure AID
 Hello! This is the submission of **PAREF Woodrose School Senior Team D** to the 2026 Breaking Barriers, Building Bridges Hackathon. 
 
-This is an app that lets users, primarily PWDs, rate public spaces and be rewarded with cute blobs.
+This is an app that lets users, primarily Persons With Disability (PWDs), rate public spaces and be rewarded with cute blobs. With Adventure AID (Accessibility, Inclusivity, Discovery), we hope to encourage our audience to experience adequate physical activity while also contributing to safety, education, and inclusivity for all. 
 
-Enjoy!
+Enjoy! 
+
+*Artificial intelligence was used in the drafting and debugging of this program. However, all art, concept, and writing was done by humans.*
 
 **NOTE:** As of 02/21/2026 11:34 PM, some files, particularly images, are not loading properly. It might just be taking a long time, but if images still do not appear we recommend downloading all the repository files to your device to test it locally. 
 
@@ -17,7 +19,6 @@ Enjoy!
 - Elements resize responsively on various screen sizes. This includes the header elements, the map section, and the creatures page.
 - Pixel art and graphics, with shading!
 
-Artificial intelligence was used in the debugging of this program. However, all art, concept, and writing was done by a human.
 ---
 
 Made by:
